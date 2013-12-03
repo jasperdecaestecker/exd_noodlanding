@@ -1,4 +1,45 @@
 body
 {
-	background: url('../zb.jpg') repeat;
+	/*background: url('../zb.jpg') repeat;*/
 }
+
+canvas
+{
+	background-color: #0f0c21;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#startInstellingen
+{
+	width: 300px;
+	background-color: grey;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#eigenWebcamBeeld
+{
+	float: left;
+}
+
+#andereWebcamBeeld
+{
+	float: right;
+}
+
+#toestel h1
+{
+	color:pink;
+
+}
+
+#toestel
+{
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	width: 500px;
+}
+

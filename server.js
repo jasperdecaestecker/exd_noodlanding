@@ -58,6 +58,7 @@ io.sockets.on('connection', function (socket)
 
     socket.on('send', function(msg)
     {
+
         console.log(msg);
     });
 
@@ -66,10 +67,13 @@ io.sockets.on('connection', function (socket)
     c.onSocketConnection(io, socket, connectionEasyRtcId);
 
     // Incoming messages: Custom message. Allows applications to send socket messages to other connected users.
-    socket.on('message', function(msg) {
+    socket.on('message', function(msg) 
+    {
+        console.log("[message]");
         console.log(msg);
+        //msg ="trol";
        // logServer.debug('easyRTC: Socket [' + socket.id + '] message received', { label: 'easyrtc', easyrtcid:connectionEasyRtcId, applicationName: easyrtc.connections[connectionEasyRtcId].applicationName, data:msg});
-        //c.onSocketMessage(io, socket, connectionEasyRtcId, msg);
+        c.onSocketMessage(io, socket, connectionEasyRtcId, msg);
     });
 
     // Incoming easyRTC commands: Used to forward webRTC negotiation details and manage server settings.
