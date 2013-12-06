@@ -9,13 +9,11 @@ var SpaceShip = (function()
 		this.height = height;
 		this.velX = 0;
 		this.velY = 0;
-			this.speed = 3;
-			this.friction = 0.8;
-
+		this.speed = 3;
+		this.friction = 0.8;
 		this.shape = new createjs.Shape();
 		this.shape.x = this.x;
 		this.shape.y = this.y;
-
 		this.draw();
 	}
 
@@ -25,7 +23,6 @@ var SpaceShip = (function()
 		this.shape.graphics.f("00FF00");
 		this.shape.graphics.drawCircle(0,0,this.height);
 		this.shape.graphics.ef();
-		console.log("test");
 	};
 
 	SpaceShip.prototype.update = function()
@@ -36,7 +33,6 @@ var SpaceShip = (function()
 		this.shape.y = this.y;
 		this.velX *= this.friction;
 		this.velY *= this.friction;
-
 	}
 
 	return SpaceShip;
