@@ -21,6 +21,61 @@ httpApp.configure(function()
     httpApp.get("/easyrtc/img/powered_by_easyrtc.png",  function(req, res) {res.sendfile('api/img/powered_by_easyrtc.png',{root:__dirname});});
 });
 
+//bewegen
+var path = '/dev/tty.usbmodemfa131';
+var board = new firmata.Board(path,function(err)
+{
+  if(err)
+  {
+    console.log(err);
+    return;
+  } 
+  else 
+  {
+    console.log('connected');
+    board.pinMode(7,board.MODES.INPUT);
+    board.pinMode(6,board.MODES.INPUT);
+    board.pinMode(5,board.MODES.INPUT);
+    board.pinMode(4,board.MODES.INPUT);
+
+    board.digitalRead(7,showValues7);
+    board.digitalRead(6,showValues6);
+    board.digitalRead(5,showValues5);
+    board.digitalRead(4,showValues4);
+
+  }
+});
+
+function showValues7(data){
+  var doContinue;
+  if(data==board.HIGH){
+    console.log("MOVE LEFT "+data);
+  }
+}
+
+
+function showValues6(data){
+
+  if(data==board.HIGH){
+    console.log("MOVE UP "+data);
+  }
+}
+
+function showValues5(data){
+
+  if(data==board.HIGH){
+    console.log("MOVE DOWN "+data);
+  }
+}
+
+function showValues4(data){
+
+  if(data==board.HIGH){
+    console.log("MOVE RIGHT "+data);
+  }
+}
+//sluit bewegen
+
 //server 
 var server = http.createServer(httpApp).listen(easyrtcCfg.httpPort);
 
