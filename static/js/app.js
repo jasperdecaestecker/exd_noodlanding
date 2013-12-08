@@ -16,6 +16,8 @@ var selfid,
     boxes, 
     landingZone;
 
+    //velx en vely ++ en -- gebruiken om te bewegen
+
 function startInstellingenGekozen(e)
 {  
   e.preventDefault();
@@ -78,37 +80,6 @@ function keydown(e)
 
 function update()
 {
-  if(toestel == "RuimteSchip")
-  {
-    if(keys[37])
-    {
-      if(spaceShip.velX > - spaceShip.speed)
-      {
-        spaceShip.velX --;
-      }
-    }
-    if(keys[39])
-    {
-      if(spaceShip.velX < spaceShip.speed)
-      {
-        spaceShip.velX ++;
-      }
-    }
-    if(keys[38])
-    {
-      if(spaceShip.velY >- spaceShip.speed)
-      {
-        spaceShip.velY --;
-      }
-    }
-    if(keys[40])
-    {
-      if(spaceShip.velY < spaceShip.speed)
-      {
-        spaceShip.velY ++;
-      }
-    }
-  }
 
   for(var i = 0; i < boxes.length; i++)
   {
