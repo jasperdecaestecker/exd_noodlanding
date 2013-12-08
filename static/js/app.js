@@ -4,18 +4,6 @@ $( document ).ready(function()
   $('#startInstellingen form').submit(startInstellingenGekozen);
 });
 
-//server - moet misschien nog naar server.js verplaatst worden, maar eerst hier testen.
-var http = require('http');
-var firmata = require('firmata');
-
-
-http.createServer(function(req,res){
-  res.writeHead(200,{'Content-Type':'text/plain'});
-  res.end('ARDUINO BUTTON\n');
-  console.log('test');
-}).listen(1337,'127.0.0.1');
-console.log('server running at http://127.0.0.1:1337:/');
-
 
 var path = '/dev/tty.usbmodemfa131';
 var board = new firmata.Board(path,function(err)
@@ -46,9 +34,6 @@ function showValues7(data){
   if(data==board.HIGH){
     console.log("MOVE LEFT "+data);
   }
-  else if(data==board.LOW){
-    //console.log("DO NOTMOVE LEFT "+data+" WITH COUNTER "+counter);
-  }
 }
 
 
@@ -57,9 +42,6 @@ function showValues6(data){
   if(data==board.HIGH){
     console.log("MOVE UP "+data);
   }
-  else if(data==board.LOW){
-    //console.log("DO NOTMOVE UP "+data+" WITH COUNTER "+counter);
-  }
 }
 
 function showValues5(data){
@@ -67,18 +49,12 @@ function showValues5(data){
   if(data==board.HIGH){
     console.log("MOVE DOWN "+data);
   }
-  else if(data==board.LOW){
-    //console.log("DO NOTMOVE RIGHT "+data+" WITH COUNTER "+counter);
-  }
 }
 
 function showValues4(data){
 
   if(data==board.HIGH){
     console.log("MOVE RIGHT "+data);
-  }
-  else if(data==board.LOW){
-    //console.log("DO NOTMOVE DOWN "+data+" WITH COUNTER "+counter);
   }
 }
 

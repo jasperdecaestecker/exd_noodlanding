@@ -8,6 +8,7 @@ var http    = require('http');              // http server core module
 var express = require('express');           // web framework external module
 var sio     = require('socket.io');         // web socket external module
 var winston = require('winston');           // logging module
+var firmata = require('firmata');           // firmata
 
 var httpApp = express();
 httpApp.configure(function() 
@@ -20,6 +21,7 @@ httpApp.configure(function()
     httpApp.get("/easyrtc/img/powered_by_easyrtc.png",  function(req, res) {res.sendfile('api/img/powered_by_easyrtc.png',{root:__dirname});});
 });
 
+//server 
 var server = http.createServer(httpApp).listen(easyrtcCfg.httpPort);
 
 // Start socket server
