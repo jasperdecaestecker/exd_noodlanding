@@ -46,10 +46,17 @@ var board = new firmata.Board(path,function(err)
   }
 });
 
+function move()
+{
+  // c.onEasyRtcCmd(io, socket, connectionEasyRtcId, msg);
+  console.log(easyrtc.connections);
+}
+
 function showValues7(data){
   var doContinue;
   if(data==board.HIGH){
     console.log("MOVE LEFT "+data);
+    move();
   }
 }
 
