@@ -9,7 +9,7 @@ voip made with http://easyrtc.com/
 TODO-LIST
 ===============
 
-- ~~ arduino koppelen ~~
+- ~~arduino koppelen~~
 - 2 arduino koppelen aan 1 pc ?
 - design.
 - alles in een verhaaljasje stoppen
