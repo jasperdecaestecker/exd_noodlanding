@@ -29,6 +29,8 @@ var SpaceShip = (function()
 	{
 		this.x += this.velX;
 		this.y += this.velY;
+		this.x = Math.round(this.x,1);
+		this.y = Math.round(this.y,1);
 		this.shape.x = this.x;
 		this.shape.y = this.y;
 		this.velX *= this.friction;

@@ -16,7 +16,7 @@ var selfid,
     boxes, 
     landingZone;
 
-    //velx en vely ++ en -- gebruiken om te bewegen
+var prevX, prevY;    
 
 function startInstellingenGekozen(e)
 {  
@@ -42,10 +42,27 @@ function startInstellingenGekozen(e)
   window.onkeydown = keydown;
 }
 
-function listenToPositionChanged(from,data)
+function listenToDataFromServer(from,data)
 {
-  spaceShip.x = data.x;
-  spaceShip.y = data.y;
+
+  console.log(data);
+
+  if(toestel == "RuimteSchip")
+  {
+    if(data.msgType == "joystickAangesproken")
+    {
+      console.log("check");
+      keys[37] = (data.left) ? true : false;
+      keys[38] = (data.up) ? true : false;
+      keys[39] = (data.right) ? true : false;
+      keys[40] = (data.down) ? true : false;
+    }
+  }
+  if(data.msgType == "stuurCoordinaten")
+  {
+    spaceShip.x = data.x;
+    spaceShip.y = data.y;
+  } 
 }
 
 function setToestel()
@@ -56,7 +73,7 @@ function setToestel()
     landingZone = new LandingZone(width-150,height-10,150,10);
     stage.addChild(spaceShip.shape);
     stage.addChild(landingZone.shape);
-    easyRTC.setDataListener(listenToPositionChanged);
+    easyRTC.setDataListener(listenToDataFromServer);
   }
   else
   {
@@ -65,6 +82,7 @@ function setToestel()
     stage.addChild(landingZone.shape);
     stage.addChild(spaceShip.shape);
     boxes.push(new Bound(landingZone.x,landingZone.y,landingZone.width,landingZone.height,"landing"));
+     easyRTC.setDataListener(listenToDataFromServer);
   }
 }
 
@@ -78,8 +96,44 @@ function keydown(e)
   keys[e.keyCode] = true;
 }
 
+function moveShip()
+{
+  if(toestel == "RuimteSchip")
+  {
+    if(keys[37])
+    {
+      if(spaceShip.velX > - spaceShip.speed)
+      {
+        spaceShip.velX --;
+      }
+    }
+    if(keys[39])
+    {
+      if(spaceShip.velX < spaceShip.speed)
+      {
+        spaceShip.velX ++;
+      }
+    }
+    if(keys[38])
+    {
+      if(spaceShip.velY >- spaceShip.speed)
+      {
+        spaceShip.velY --;      
+      }
+    }    
+    if(keys[40])
+    {
+      if(spaceShip.velY < spaceShip.speed)
+      {
+        spaceShip.velY ++;
+      }
+    }
+  }
+}
+
 function update()
 {
+  moveShip();
 
   for(var i = 0; i < boxes.length; i++)
   {
@@ -106,11 +160,16 @@ function update()
   {
     if(otherid != null)
     {
-      console.log(otherid);
-       //easyRTC.sendDataWS(otherid, "Hallo lelijke wereld");
-       easyRTC.sendDataWS(otherid, {x: spaceShip.x, y:spaceShip.y});
+      //easyRTC.sendDataWS(otherid, "Hallo lelijke wereld");
+      if(prevY != spaceShip.y || prevX != spaceShip.x)
+      {
+        easyRTC.sendDataWS(otherid, {msgType:"stuurCoordinaten", x: spaceShip.x, y:spaceShip.y});
+      }
     }
   }
+
+  prevX = spaceShip.x;
+  prevY = spaceShip.y;
 }
 
 function checkIfLanded(boundName)
@@ -129,6 +188,9 @@ function loginSuccess(easyRTCId)
 {
   selfid = easyRTCId;
   console.log("my id =" + selfid);  
+
+  // stuur type toestel naar server
+  //easyRTC.sendServerMessage("setToestelId", {id: easyRTCId, typeToestel:toestel});
 }
 
 function init() 
@@ -151,6 +213,23 @@ function clearConnectList()
 
 function loggedInListener(data) 
 {
+  /*console.log("[loggedInListener");
+  console.log($.isEmptyObject(data));
+  if(!$.isEmptyObject(data))
+  {
+    console.log("call ma die bitch");
+    for(var i in data) 
+    {
+      console.log(i);
+      otherid = i;
+      performCall(i);
+    } 
+   // otherid = dat
+     //otherid = easyrtcid;
+  }*/
+  //console.log(selfid);
+
+
   clearConnectList();
   otherClientDiv = document.getElementById('lijstMetClients');
   for(var i in data) 
@@ -164,6 +243,7 @@ function loggedInListener(data)
               performCall(easyrtcid);
               otherid = easyrtcid;
               //easyRTC.sendDataWS(easyrtcid, "Hallo lelijke wereld");
+              //$('#lijstMetClients').hide();
           }
       }(i);
 
