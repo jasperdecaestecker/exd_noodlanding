@@ -46,6 +46,7 @@ var board = new firmata.Board(path,function(err)
   }
 });
 
+// NORMAL MOVEMENT
 function showValues7(data)
 {
   directionJoystick["left"] = (data == 1) ? true : false;
@@ -64,7 +65,6 @@ function showValues5(data){
 
 function showValues4(data){
   directionJoystick["right"] = (data == 1) ? true : false;
-
 }
 
 function move()

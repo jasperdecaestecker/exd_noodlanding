@@ -10,7 +10,7 @@ var SpaceShip = (function()
 		this.velX = 0;
 		this.velY = 0;
 		this.speed = 3;
-		this.friction = 0.8;
+		this.friction = 0.9;
 		this.shape = new createjs.Shape();
 		this.shape.x = this.x;
 		this.shape.y = this.y;
@@ -33,6 +33,8 @@ var SpaceShip = (function()
 		this.y = Math.round(this.y,1);
 		this.shape.x = this.x;
 		this.shape.y = this.y;
+
+		// comment frictie voor bizare beweging. maakt het iets cooler.
 		this.velX *= this.friction;
 		this.velY *= this.friction;
 	}
