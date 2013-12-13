@@ -6,11 +6,12 @@ runnen via poort 8080 op localhost
 
 voip made with http://easyrtc.com/
 
+arduino moet gekoppeld worden aan de pc waar de node server draait.
+
 TODO-LIST
 ===============
 
 - ~~arduino koppelen~~
-- 2 arduino koppelen aan 1 pc ?
 - design.
 - alles in een verhaaljasje stoppen
 - code kuisen.
