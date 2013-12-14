@@ -1,37 +1,55 @@
+@font-face { font-family: 'PlutoSansHeavy'; src: url('fonts/237D84_C_0.eot');src: url('fonts/237D84_C_0.eot?#iefix') format('embedded-opentype'),url('fonts/237D84_C_0.woff') format('woff'),url('fonts/237D84_C_0.ttf') format('truetype');}
+@font-face { font-family: 'PlutoSansMedium'; src: url('fonts/237D84_E_0.eot');src: url('fonts/237D84_E_0.eot?#iefix') format('embedded-opentype'),url('fonts/237D84_E_0.woff') format('woff'),url('fonts/237D84_E_0.ttf') format('truetype');}
+
 body
 {
-	/*background: url('../zb.jpg') repeat;*/
+	background-image:url('images/background.png');
+	background-repeat: repeat;
+	font-family: PlutoSansMedium, Helvetica, sans-serif;
+	color:white;
+	font-size: 1.4em;
+	line-height: 1.6em;
 }
 
-canvas
+
+#eigenEffect, #andereEffect
 {
-	background-color: #0f0c21;
-	margin-left: auto;
-	margin-right: auto;
+	width:300px;
+	height: 200px;
+	z-index: 1;
 }
 
-#startInstellingen
+#eigenWebcamBeeld, #andereWebcamBeeld
 {
-	width: 300px;
-	background-color: grey;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+	-webkit-filter: grayscale(100%) brightness(140%) contrast(110%);
+  	-moz-filter: grayscale(100%) brightness(140%) contrast(110%);
+  	-ms-filter: grayscale(100%) brightness(140%) contrast(110%);
+  	-o-filter: grayscale(100%) brightness(140%) contrast(110%);
+  	filter: grayscale(100%) brightness(140%) contrast(110%);
+  	filter: url(grayscale.svg) brightness(140%) contrast(110%); 
+  	filter: gray; 
+
+  	background-color: black;
+	z-index: 0;
 }
 
-#eigenWebcamBeeld
+#eigenWebcamBeeld, #eigenEffect
 {
-	float: left;
+	position: absolute;
+	left: 0;
+	top:0;
 }
 
-#andereWebcamBeeld
+#andereWebcamBeeld, #andereEffect
 {
-	float: right;
+	position: absolute;
+	left: 0;
+	top: 200px;
 }
 
 #toestel h1
 {
-	color:pink;
+	color:black;
 
 }
 
@@ -41,5 +59,62 @@ canvas
 	margin-right: auto;
 	display: block;
 	width: 500px;
+	height: 100%;
+	border:1px solid white;
+	text-align: center;
+	display: none;
 }
+
+#cnvs
+{
+	width: 50%;
+	margin-right:auto;
+	margin-left: 25%;
+}
+
+#startInstellingen
+{
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20%
+}
+
+input[type="submit"]
+{
+	width: 200px;
+	height: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid white;
+	background-color:#101820;
+	color:white;
+	text-align: center
+}
+
+
+@media screen and (max-width: 1050px) {
+	#eigenEffect, #eigenWebcamBeeld, #andereEffect, #andereWebcamBeeld
+	{
+		display: none;
+		visibility: hidden;
+	}
+
+}
+
+@media screen and (max-width: 700px) {
+	#eigenEffect, #eigenWebcamBeeld, #andereEffect, #andereWebcamBeeld
+	{
+		display: none;
+		visibility: hidden;
+	}
+
+	#cnvs
+	{
+		height: 1000px;
+	}
+
+}
+
+
 
