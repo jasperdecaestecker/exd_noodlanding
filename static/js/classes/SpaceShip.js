@@ -1,6 +1,6 @@
 var SpaceShip = (function()
 {
-	var shape;
+	var shape, bitmap, animation;
 	function SpaceShip(x, y, width, height)
 	{
 		this.x = x;
@@ -9,20 +9,38 @@ var SpaceShip = (function()
 		this.height = height;
 		this.velX = 0;
 		this.velY = 0;
+		this.gravity = 0.02;
 		this.speed = 3;
 		this.friction = 0.9;
-		this.shape = new createjs.Shape();
-		this.shape.x = this.x;
-		this.shape.y = this.y;
+		this.container = new createjs.Container();
+		
+		this.container.x = this.x;
+		this.container.y = this.y;
 		this.draw();
 	}
 
 	SpaceShip.prototype.draw = function()
 	{
+		this.shape = new createjs.Shape();
 		this.shape.graphics.c();
 		this.shape.graphics.f("00FF00");
-		this.shape.graphics.drawCircle(0,0,this.height);
+		this.shape.graphics.drawCircle(0,0,50);
 		this.shape.graphics.ef();
+		this.shape.alpha = 0;
+
+		var data = {
+		     images: ["css/images/raketSprite.png"],
+		     frames: {width:125, height:125,
+	 		 animations: {spin:[0,7]}}};
+
+		var spriteSheet = new createjs.SpriteSheet(data);
+		this.animation = new createjs.Sprite(spriteSheet);
+		this.animation.x = -60;
+		this.animation.y = -60;
+		this.animation.gotoAndStop(4);
+
+		this.container.addChild(this.shape);
+		this.container.addChild(this.animation);
 	};
 
 	SpaceShip.prototype.update = function()
@@ -31,12 +49,14 @@ var SpaceShip = (function()
 		this.y += this.velY;
 		this.x = Math.round(this.x,1);
 		this.y = Math.round(this.y,1);
-		this.shape.x = this.x;
-		this.shape.y = this.y;
-
+		this.container.x = this.x;
+		this.container.y = this.y;
 		// comment frictie voor bizare beweging. maakt het iets cooler.
 		this.velX *= this.friction;
 		this.velY *= this.friction;
+
+		// uncomment voor gravity
+		//this.velY += this.gravity;
 	}
 
 	return SpaceShip;

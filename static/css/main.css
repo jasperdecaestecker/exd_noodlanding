@@ -11,6 +11,19 @@ body
 	line-height: 1.6em;
 }
 
+canvas
+{
+	/*background-color: black;*/
+}
+
+#startScherm
+{
+	position: absolute;
+	top:0;
+	margin-right: auto;
+	margin-left: auto;
+	width: 1280px;
+}
 
 #eigenEffect, #andereEffect
 {
@@ -72,12 +85,17 @@ body
 	margin-left: 25%;
 }
 
+#lijstMetClients
+{
+	float: right;
+}
+
 #startInstellingen
 {
 	width: 200px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 20%
+	margin-top: 20%;
 }
 
 input[type="submit"]
@@ -111,7 +129,7 @@ input[type="submit"]
 
 	#cnvs
 	{
-		height: 1000px;
+		/*height: 1000px;*/
 	}
 
 }

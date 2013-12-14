@@ -2,17 +2,18 @@
 <html>
     <head>
         <script src="/socket.io/socket.io.js"></script> 
+             <link rel="stylesheet" type="text/css" href="/css/main.css" />
         <script type="text/javascript" src="js/vendor/modernizr.js"></script>
         <script type="text/javascript" src="/easyrtc/easyrtc.js"></script> 
         <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
         <script type="text/javascript" src="js/vendor/easeljs-0.7.0.min.js"></script>
+        <script type="text/javascript" src="js/classes/Asteroid.js"></script>
         <script type="text/javascript" src="js/classes/SpaceShip.js"></script>
         <script type="text/javascript" src="js/classes/LandingZone.js"></script>
         <script type="text/javascript" src="js/classes/CollisionDetection.js"></script>
         <script type="text/javascript" src="js/classes/Bound.js"></script>
         <script type="text/javascript" src="js/app.js"></script> 
-
-        <link rel="stylesheet" type="text/css" href="/css/main.css" />
+   
         <title>exd_noodlanding</title>
     </head>
      <body>
@@ -33,7 +34,8 @@
         <img src="css/images/texture.png" id="eigenEffect">
 
 
-
-        <canvas id="cnvs" width="800" height="895"></canvas>
+      
+        <canvas id="cnvs" width="944" height="1000"></canvas>
+        <div id="startScherm"></div>
     </body>
 </html>
