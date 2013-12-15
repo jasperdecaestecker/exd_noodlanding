@@ -15,6 +15,8 @@ var selfid,
     spaceShip,
     boxes, 
     landingZone,
+    delayPilkes,
+    currentAnimationPilke,
     blueScreenOfDeath,
     delayBlueScreenOfDeath,
     blueScreenOfDeathToggle,
@@ -82,6 +84,13 @@ function startSpel()
             '<source src="startClip.mp4" type="video/mp4">' +
         '</video>');*/
 
+    setTimeout(function() 
+    {
+        console.log("crashScreen");
+
+
+    }, 1200);
+
 
   }
   joystickGestart = true;
@@ -123,12 +132,15 @@ function listenToDataFromServer(from,data)
   if(data.msgType == "succesvolGeland")
   {
     showEndScreen();
-    console.log(data);
+    //console.log(data);
   }
 }
 
 function setToestel()
 {
+
+  delayPilkes = 25;
+  currentAnimationPilke = 0;
 
   spaceShip = new SpaceShip(50,50,10,10);
     landingZone = new LandingZone(0,this.height-255,944,255);
@@ -220,7 +232,7 @@ function moveShip()
   {
     if(keys[37]) // links
     {
-       this.direction += "l";
+      this.direction += "l";
       if(spaceShip.velX >- spaceShip.speed)
       {
         spaceShip.velX --;
@@ -256,9 +268,9 @@ function moveShip()
     }
   }
 
-  if(this.direction == "")
+  if(this.direction != "" && !joystickGestart)
   {
-   // this.direction = "b";
+    startSpel();
   }
 
   showDirectionSpaceship(this.direction);
@@ -325,6 +337,21 @@ function update()
 
       spaceShip.update();
       stage.update();
+
+
+   
+
+      if(ticker.getTicks() % delayPilkes == 0)
+      {
+        landingZone.pilke.gotoAndStop(currentAnimationPilke);
+        currentAnimationPilke++;
+
+        if(currentAnimationPilke == 4)
+        {
+          currentAnimationPilke = 0;
+        }
+
+      }
      
 
      // console.log("xamountOfTicks"+ ticker.getTicks());
@@ -425,17 +452,17 @@ function showEndScreen()
 {
   if(toestel == "RuimteSchip")
   {
-     var text = new createjs.Text("Proficiat je hebt mooi kunnen landen op het platform!", "20px Arial", "#ffffff"); text.x = 100; text.textBaseline = "alphabetic";
+     //var text = new createjs.Text("Proficiat je hebt mooi kunnen landen op het platform!", "20px Arial", "#ffffff"); text.x = 100; text.textBaseline = "alphabetic";
   }
   else
   {
-     var text = new createjs.Text("Dankzij je hulp is de astronaut goed kunnen landen!", "20px Arial", "#ffffff"); text.x = 100; text.textBaseline = "alphabetic";
+     //var text = new createjs.Text("Dankzij je hulp is de astronaut goed kunnen landen!", "20px Arial", "#ffffff"); text.x = 100; text.textBaseline = "alphabetic";
   }
 
-  text.y = 100;
+  //text.y = 100;
 
-  stage.addChild(text);
-  stage.update();
+  //stage.addChild(text);
+  //stage.update();
 
   canControl = false;
  
@@ -447,7 +474,7 @@ function showEndScreen()
   setTimeout(function() 
   {
     canControl = true;
-     stage.removeChild(text);
+    stage.removeChild(text);
 
     console.log("timeout complete");
 

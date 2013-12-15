@@ -1,6 +1,6 @@
 var LandingZone = (function()
 {
-	var shape, container, bitmap;
+	var shape, container, bitmap, pilke;
 	function LandingZone(x, y, width, height)
 	{
 		this.x = x;
@@ -28,8 +28,21 @@ var LandingZone = (function()
 		this.bitmap.x = 0;
 		this.bitmap.y = 0;
 
+
+		var data = {
+		     images: ["css/images/pilke.png"],
+		     frames: {width:50, height:100,
+	 		 animations: {arrowLoop:[0,3]}}};
+
+		var spriteSheet = new createjs.SpriteSheet(data);
+		this.pilke = new createjs.Sprite(spriteSheet);
+		this.pilke.x = 600;
+		this.pilke.y = 75;
+
+	
 		this.container.addChild(this.shape);
 		this.container.addChild(this.bitmap);
+			this.container.addChild(this.pilke);
 	};
 
 	return LandingZone;
