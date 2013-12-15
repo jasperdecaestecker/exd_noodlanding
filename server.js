@@ -33,7 +33,7 @@ var board = new firmata.Board(path,function(err)
   } 
   else 
   {
-    console.log('connected');
+    console.log('Arduino connected');
     board.pinMode(7,board.MODES.INPUT);
     board.pinMode(6,board.MODES.INPUT);
     board.pinMode(5,board.MODES.INPUT);

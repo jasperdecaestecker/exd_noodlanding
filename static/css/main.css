@@ -16,12 +16,11 @@ canvas
 	/*background-color: black;*/
 }
 
-#startScherm
+#startScherm, #ruisScherm
 {
 	position: absolute;
 	top:0;
-	margin-right: auto;
-	margin-left: auto;
+	left: 300px;
 	width: 1280px;
 }
 

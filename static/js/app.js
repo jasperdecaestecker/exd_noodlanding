@@ -17,9 +17,8 @@ var selfid,
     landingZone,
     delayPilkes,
     currentAnimationPilke,
-    blueScreenOfDeath,
-    delayBlueScreenOfDeath,
-    blueScreenOfDeathToggle,
+    delayRuis,
+    toggleRuis,
     endTicker,
     canControl,
     joystickGestart = false,
@@ -60,7 +59,7 @@ function voegAstroidenToe()
   stage.addChild(astroide1.container);
   boxes.push(new Bound(astroide1.container.x - 50, astroide1.container.y - 50,100,100,"astroide"));
 
-  var astroide2 = new Asteroid(530,200,100,100,2);
+  var astroide2 = new Asteroid(730,200,100,100,2);
   stage.addChild(astroide2.container);
   boxes.push(new Bound(astroide2.container.x - 50, astroide2.container.y - 50,100,100,"astroide"));
 
@@ -71,29 +70,52 @@ function voegAstroidenToe()
     var astroide4 = new Asteroid(450,329,100,100,4);
   stage.addChild(astroide4.container);
   boxes.push(new Bound(astroide4.container.x - 50, astroide4.container.y - 50,100,100,"astroide"));
+
+     var astroide5 = new Asteroid(650,680,100,100,2);
+  stage.addChild(astroide5.container);
+  boxes.push(new Bound(astroide5.container.x - 50, astroide5.container.y - 50,100,100,"astroide"));
 }
 
 function startSpel()
 {
   console.log("zotjes");
-  if(!joystickGestart)
+  if(!joystickGestart && toestel == "RuimteSchip")
   {
     //stage.removeChild(startText);
-    /*$("#startScherm").html(
-        '<video width="1280" height="720" autoplay>' +
-            '<source src="startClip.mp4" type="video/mp4">' +
-        '</video>');*/
+   
 
     setTimeout(function() 
     {
         console.log("crashScreen");
 
+        canControl = false;
+            keys[37] = keys[38] = keys[39] = keys[40] = false;
+         $("#startScherm").html(
+        '<video width="1280" height="720" id="startVideo" autoplay>' +
+            '<source src="startRuimteSChip.mp4" type="video/mp4">' +
+        '</video>');
+
+        document.getElementById('startVideo').addEventListener('ended',myHandler,false);
+        function myHandler(e) 
+        {
+            if(!e) { e = window.event; }
+
+                      $("#startVideo").hide();
+                      $("#ruisScherm").html(
+                      '<video width="1280" height="720" id="ruisVideo" autoplay loop>' +
+                          '<source src="ruis.mp4" type="video/mp4">' +
+                      '</video>');
+
+                      canControl = true;
+
+
+        }
 
     }, 1200);
 
 
-  }
   joystickGestart = true;
+  }
 }
 
 function listenToDataFromServer(from,data)
@@ -139,7 +161,9 @@ function listenToDataFromServer(from,data)
 function setToestel()
 {
 
+  delayRuis = 100;
   delayPilkes = 25;
+  toggleRuis = true;
   currentAnimationPilke = 0;
 
   spaceShip = new SpaceShip(50,50,10,10);
@@ -312,7 +336,10 @@ function update()
 
   if(!ticker.getPaused())
   {
-      moveShip();
+      if(canControl)
+      {
+        moveShip();
+      }
 
       for(var i = 0; i < boxes.length; i++)
       {
@@ -353,6 +380,24 @@ function update()
 
       }
      
+     if(ticker.getTicks() % delayRuis == 0)
+     {
+       toggleRuis = !toggleRuis;
+        if(toggleRuis)
+        {
+          delayRuis = 200;
+          $("#ruisVideo").show();
+          console.log("SHOW");
+          //this.blueScreenOfDeath.alpha = 1;
+        }
+        else
+        {
+            delayRuis = 20;
+             console.log("HIDE");
+          $("#ruisVideo").hide();
+          //this.blueScreenOfDeath.alpha = 0;
+        }
+     }
 
      // console.log("xamountOfTicks"+ ticker.getTicks());
      /*if(toestel == "RuimteSchip")
@@ -391,17 +436,7 @@ function update()
 
 function revealTheScreen()
 {
-    blueScreenOfDeathToggle = !blueScreenOfDeathToggle;
-    if(blueScreenOfDeathToggle)
-    {
-      delayBlueScreenOfDeath = 200;
-      this.blueScreenOfDeath.alpha = 1;
-    }
-    else
-    {
-        delayBlueScreenOfDeath = 20;
-      this.blueScreenOfDeath.alpha = 0;
-    }
+   
 }
 
 function determineCollisionType(boundName, direction)
@@ -450,57 +485,26 @@ function determineCollisionType(boundName, direction)
 
 function showEndScreen()
 {
-  if(toestel == "RuimteSchip")
-  {
-     //var text = new createjs.Text("Proficiat je hebt mooi kunnen landen op het platform!", "20px Arial", "#ffffff"); text.x = 100; text.textBaseline = "alphabetic";
-  }
-  else
-  {
-     //var text = new createjs.Text("Dankzij je hulp is de astronaut goed kunnen landen!", "20px Arial", "#ffffff"); text.x = 100; text.textBaseline = "alphabetic";
-  }
-
-  //text.y = 100;
-
-  //stage.addChild(text);
-  //stage.update();
-
   canControl = false;
- 
   ticker.setPaused(true);
-  //ticker.reset();
 
-
+  $("#startScherm").empty();
+  $("#ruisScherm").empty();
 
   setTimeout(function() 
   {
     canControl = true;
-    stage.removeChild(text);
 
     console.log("timeout complete");
 
-      spaceShip.x = 50;
-
+    spaceShip.x = 50;
     spaceShip.y = 50;
     spaceShip.velX = 0;
     spaceShip.velY = 0;
     keys[37] = keys[38] = keys[39] = keys[40] = false;
     stage.update();
     ticker.setPaused(false);
-
-    if(toestel == "RuimteSchip")
-    {
-      startText = new createjs.Text("Luister naar je mede astronaut om succesvol te landen.", "20px Arial", "#ff7700"); startText.x = 100; startText.y = 50; startText.textBaseline = "alphabetic";
-    }
-    else
-    {
-      startText = new createjs.Text("Het scherm van het RuimteSchip is stuk, geef instructies om te landen", "20px Arial", "#ff7700"); startText.x = 100; startText.y = 50; startText.textBaseline = "alphabetic";
-    }
-
-    stage.addChild(startText);
     joystickGestart = false;
-
-
-
   }, 2000);
 }
 
