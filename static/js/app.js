@@ -82,11 +82,15 @@ function startSpel()
   if(!joystickGestart && toestel == "RuimteSchip")
   {
     //stage.removeChild(startText);
-   
+           
 
     setTimeout(function() 
     {
         console.log("crashScreen");
+
+
+        document.getElementById('alarm').play();
+       document.getElementById('alarm').volume=.5;
 
         canControl = false;
             keys[37] = keys[38] = keys[39] = keys[40] = false;
@@ -98,6 +102,7 @@ function startSpel()
         document.getElementById('startVideo').addEventListener('ended',myHandler,false);
         function myHandler(e) 
         {
+
             if(!e) { e = window.event; }
 
                       $("#startVideo").hide();
@@ -295,6 +300,7 @@ function moveShip()
   if(this.direction != "" && !joystickGestart)
   {
     startSpel();
+
   }
 
   showDirectionSpaceship(this.direction);
@@ -491,6 +497,9 @@ function showEndScreen()
   $("#startScherm").empty();
   $("#ruisScherm").empty();
 
+    document.getElementById('alarm').pause();
+    document.getElementById('alarm').currentTime = 0;
+
   setTimeout(function() 
   {
     canControl = true;
@@ -523,6 +532,7 @@ function init()
     stage = new  createjs.Stage("cnvs");
     width = stage.canvas.width;
     height = stage.canvas.height;
+
 
     //$('#startScherm').hide();
  }
