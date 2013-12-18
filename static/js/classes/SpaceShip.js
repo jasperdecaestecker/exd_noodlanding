@@ -16,6 +16,8 @@ var SpaceShip = (function()
 		
 		this.container.x = this.x;
 		this.container.y = this.y;
+		this.container.width = width;
+		this.container.height = height;
 		this.draw();
 	}
 
@@ -49,6 +51,17 @@ var SpaceShip = (function()
 		this.y += this.velY;
 		this.x = Math.round(this.x,1);
 		this.y = Math.round(this.y,1);
+
+		// controle indien je uit het scherm zou botsen dat je gereset wordt
+		if(this.x < 0 || this.x > 1000)
+		{
+			this.x = 100;
+		}
+		if(this.y < 0 || this.y > 1000)
+		{
+			this.y = 100;
+		}
+
 		this.container.x = this.x;
 		this.container.y = this.y;
 		// comment frictie voor bizare beweging. maakt het iets cooler.

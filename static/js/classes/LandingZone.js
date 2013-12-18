@@ -20,8 +20,8 @@ var LandingZone = (function()
 		this.shape.graphics.f("FF0000");
 		this.shape.graphics.drawRect(0,0,150,50);
 		this.shape.graphics.ef();
-		this.shape.y = 165;
-		this.shape.x = 525;
+		this.shape.y = 155;
+		this.shape.x = 555;
 		this.shape.alpha = 0;
 
 		this.bitmap = new createjs.Bitmap("css/images/planet.png");
@@ -40,9 +40,10 @@ var LandingZone = (function()
 		this.pilke.y = 75;
 
 	
-		this.container.addChild(this.shape);
+
 		this.container.addChild(this.bitmap);
 			this.container.addChild(this.pilke);
+					this.container.addChild(this.shape);
 	};
 
 	return LandingZone;

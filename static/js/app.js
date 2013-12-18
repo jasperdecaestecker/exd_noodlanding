@@ -55,42 +55,44 @@ function startInstellingenGekozen(e)
 
 function voegAstroidenToe()
 {
-  var astroide1 = new Asteroid(60,500,100,100,1);
+  var astroide1 = new Asteroid(60,300,100,100,1);
   stage.addChild(astroide1.container);
   boxes.push(new Bound(astroide1.container.x - 50, astroide1.container.y - 50,100,100,"astroide"));
 
-  var astroide2 = new Asteroid(730,200,100,100,2);
+  var astroide2 = new Asteroid(730,150,100,100,2);
   stage.addChild(astroide2.container);
   boxes.push(new Bound(astroide2.container.x - 50, astroide2.container.y - 50,100,100,"astroide"));
 
-  var astroide3 = new Asteroid(320,700,100,100,3);
+  var astroide3 = new Asteroid(320,700,100,100,2);
   stage.addChild(astroide3.container);
   boxes.push(new Bound(astroide3.container.x - 50, astroide3.container.y - 50,100,100,"astroide"));
 
-    var astroide4 = new Asteroid(450,329,100,100,4);
+  var astroide4 = new Asteroid(450,329,100,100,4);
   stage.addChild(astroide4.container);
   boxes.push(new Bound(astroide4.container.x - 50, astroide4.container.y - 50,100,100,"astroide"));
 
-     var astroide5 = new Asteroid(650,680,100,100,2);
+  var astroide5 = new Asteroid(650,630,100,100,3);
   stage.addChild(astroide5.container);
   boxes.push(new Bound(astroide5.container.x - 50, astroide5.container.y - 50,100,100,"astroide"));
+
+  var astroide1 = new Asteroid(830,500,100,100,1);
+  stage.addChild(astroide1.container);
+  boxes.push(new Bound(astroide1.container.x - 50, astroide1.container.y - 50,100,100,"astroide"));
 }
 
 function startSpel()
 {
   console.log("zotjes");
+
   if(!joystickGestart && toestel == "RuimteSchip")
   {
-    //stage.removeChild(startText);
-           
-
     setTimeout(function() 
     {
         console.log("crashScreen");
 
 
         document.getElementById('alarm').play();
-       document.getElementById('alarm').volume=.5;
+       document.getElementById('alarm').volume=.1;
 
         canControl = false;
             keys[37] = keys[38] = keys[39] = keys[40] = false;
@@ -105,26 +107,28 @@ function startSpel()
 
             if(!e) { e = window.event; }
 
-                      $("#startVideo").hide();
-                      $("#ruisScherm").html(
-                      '<video width="1280" height="720" id="ruisVideo" autoplay loop>' +
-                          '<source src="ruis.mp4" type="video/mp4">' +
-                      '</video>');
+            $("#startVideo").hide();
+            $("#ruisScherm").html(
+            '<video width="1280" height="720" id="ruisVideo" autoplay loop>' +
+                '<source src="ruis.mp4" type="video/mp4">' +
+            '</video>');
 
-                      canControl = true;
-
-
+            canControl = true;
         }
 
     }, 1200);
 
-
-  joystickGestart = true;
+    joystickGestart = true;
   }
 }
 
 function listenToDataFromServer(from,data)
 {
+  if(data.msgType == "voipConnected")
+  {
+    clearConnectList();
+  }
+
    if(data.msgType == "joystickAangesproken" && !joystickGestart) 
    {
       startSpel();
@@ -154,37 +158,32 @@ function listenToDataFromServer(from,data)
       console.log(data.direction);
       showDirectionSpaceship(data.direction);
     }
-   
   } 
   if(data.msgType == "succesvolGeland")
   {
     showEndScreen();
-    //console.log(data);
   }
 }
 
 function setToestel()
 {
 
-  delayRuis = 100;
+  delayRuis = 200;
   delayPilkes = 25;
   toggleRuis = true;
   currentAnimationPilke = 0;
 
   spaceShip = new SpaceShip(50,50,10,10);
-    landingZone = new LandingZone(0,this.height-255,944,255);
+  landingZone = new LandingZone(0,this.height-255,944,255);
 
-   
   stage.addChild(landingZone.container);
   stage.addChild(spaceShip.container);
-//  stage.addChild(landingZone.shape);
   easyRTC.setDataListener(listenToDataFromServer);
 
   boxes.push(new Bound(landingZone.shape.x + landingZone.container.x,landingZone.shape.y + landingZone.container.y,150,50,"landing"));
   console.log(landingZone.shape.x, landingZone.shape.y, 150, 50, "landing");
 
    voegAstroidenToe();
-
 
   canControl = true;
 
@@ -195,53 +194,9 @@ function setToestel()
   else
   {
      document.title = "RuimteSchip";
-     
-     
-
-
-     //$('#startScherm').show();
-    // stage.alpha = 0;
-     //stage.alpha = 0;
   }
-  /*if(toestel == "RuimteStation")
-  {
-    spaceShip = new SpaceShip(50,50,10,10);
-    landingZone = new LandingZone(width-150,height-10,150,10);
-    stage.addChild(spaceShip.container);
-   // stage.addChild(spaceShip.shape);
-    stage.addChild(landingZone.shape);
-    easyRTC.setDataListener(listenToDataFromServer);
-
-    startText = new createjs.Text("Het scherm van het RuimteSchip is stuk, geef instructies om te landen", "20px Arial", "#ff7700"); startText.x = 100; startText.y = 50; startText.textBaseline = "alphabetic";
-
-  }
-  else
-  {
-    spaceShip = new SpaceShip(50,50,10,10);
-    landingZone = new LandingZone(width-150,height-10,150,10);
-    stage.addChild(landingZone.container);
-        stage.addChild(landingZone.shape);
-    //stage.addChild(spaceShip.bitmap);
-   // stage.addChild(spaceShip.shape);
-    boxes.push(new Bound(landingZone.x,landingZone.y,landingZone.width,landingZone.height,"landing"));
-    easyRTC.setDataListener(listenToDataFromServer);
-
-    this.blueScreenOfDeath = new createjs.Shape();
-    this.blueScreenOfDeath.graphics.c();
-    this.blueScreenOfDeath.graphics.f("000000");
-    this.blueScreenOfDeath.graphics.drawRect(0,0,800,600);
-    this.blueScreenOfDeath.graphics.ef();
-
-  //  stage.addChild(this.blueScreenOfDeath);
-
-    delayBlueScreenOfDeath = 20;
-    blueScreenOfDeathToggle = true;
-
-    startText = new createjs.Text("Luister naar je mede astronaut om succesvol te landen.", "20px Arial", "#ff7700"); startText.x = 100; startText.y = 50; startText.textBaseline = "alphabetic";
-  }*/
 
   joystickGestart = false;
-  //stage.addChild(startText);
 }
 
 function keyup(e)
@@ -350,7 +305,7 @@ function update()
       for(var i = 0; i < boxes.length; i++)
       {
          var direction = "";
-        switch(CollisionDetection.checkCollision(spaceShip,boxes[i]))
+        switch(CollisionDetection.checkCollision(spaceShip ,boxes[i]))
         {
           case "l":
           case "r":
@@ -362,17 +317,11 @@ function update()
               direction = "vertical";
                     determineCollisionType(boxes[i].objName, direction);
             break;
-        }
-       // console.log(direction);
-  
+        }  
       }
-
 
       spaceShip.update();
       stage.update();
-
-
-   
 
       if(ticker.getTicks() % delayPilkes == 0)
       {
@@ -383,7 +332,6 @@ function update()
         {
           currentAnimationPilke = 0;
         }
-
       }
      
      if(ticker.getTicks() % delayRuis == 0)
@@ -393,35 +341,13 @@ function update()
         {
           delayRuis = 200;
           $("#ruisVideo").show();
-          console.log("SHOW");
-          //this.blueScreenOfDeath.alpha = 1;
         }
         else
         {
-            delayRuis = 20;
-             console.log("HIDE");
+          delayRuis = 10;
           $("#ruisVideo").hide();
-          //this.blueScreenOfDeath.alpha = 0;
         }
      }
-
-     // console.log("xamountOfTicks"+ ticker.getTicks());
-     /*if(toestel == "RuimteSchip")
-      {
-        if(ticker.getTicks() % delayBlueScreenOfDeath == 0)
-        {
-          console.log("updateThatSCreen");
-          revealTheScreen();
-        
-          stage.update();
-        }
-      }
-      else
-      {
-        stage.update();
-      }*/
-
-       //console.log(this.direction);
 
       if(toestel == "RuimteSchip")
       {
@@ -438,11 +364,6 @@ function update()
       prevX = spaceShip.x;
       prevY = spaceShip.y;
    }
-}
-
-function revealTheScreen()
-{
-   
 }
 
 function determineCollisionType(boundName, direction)
@@ -480,12 +401,7 @@ function determineCollisionType(boundName, direction)
   if(boundName == "landing")
   {
     easyRTC.sendDataWS(otherid, {msgType:"succesvolGeland"});
-    console.log("zotjes mooi geland!");
     showEndScreen();
-  }
-  if(boundName == "astroide")
-  {
-
   }
 }
 
@@ -493,9 +409,11 @@ function showEndScreen()
 {
   canControl = false;
   ticker.setPaused(true);
+  $("#cnvs").hide();
 
   $("#startScherm").empty();
   $("#ruisScherm").empty();
+  $('#eindScherm').show();
 
     document.getElementById('alarm').pause();
     document.getElementById('alarm').currentTime = 0;
@@ -503,7 +421,9 @@ function showEndScreen()
   setTimeout(function() 
   {
     canControl = true;
+       $("#cnvs").show();
 
+      $('#eindScherm').hide();
     console.log("timeout complete");
 
     spaceShip.x = 50;
@@ -514,7 +434,7 @@ function showEndScreen()
     stage.update();
     ticker.setPaused(false);
     joystickGestart = false;
-  }, 2000);
+  }, 3000);
 }
 
 function loginSuccess(easyRTCId) 
@@ -532,6 +452,11 @@ function init()
     stage = new  createjs.Stage("cnvs");
     width = stage.canvas.width;
     height = stage.canvas.height;
+
+    console.log("width:" + width);
+    console.log("height:" + height);
+
+    $('#eindScherm').hide();
 
 
     //$('#startScherm').hide();
@@ -578,8 +503,8 @@ function loggedInListener(data)
           {
               performCall(easyrtcid);
               otherid = easyrtcid;
-              //easyRTC.sendDataWS(easyrtcid, "Hallo lelijke wereld");
-              //$('#lijstMetClients').hide();
+              easyRTC.sendDataWS(otherid, {msgType:"voipConnected"});
+              clearConnectList();
           }
       }(i);
 
