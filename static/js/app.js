@@ -82,8 +82,6 @@ function voegAstroidenToe()
 
 function startSpel()
 {
-  console.log("zotjes");
-
   if(!joystickGestart && toestel == "RuimteSchip")
   {
     setTimeout(function() 
