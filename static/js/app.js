@@ -95,7 +95,7 @@ function startSpel()
         canControl = false;
             keys[37] = keys[38] = keys[39] = keys[40] = false;
          $("#startScherm").html(
-        '<video width="1280" height="720" id="startVideo" autoplay>' +
+        '<video width="100%" height="auto" id="startVideo" autoplay>' +
             '<source src="startRuimteSChip.mp4" type="video/mp4">' +
         '</video>');
 
@@ -107,7 +107,7 @@ function startSpel()
 
             $("#startVideo").hide();
             $("#ruisScherm").html(
-            '<video width="1280" height="720" id="ruisVideo" autoplay loop>' +
+            '<video width="100%" height="auto" id="ruisVideo" autoplay loop>' +
                 '<source src="ruis.mp4" type="video/mp4">' +
             '</video>');
 

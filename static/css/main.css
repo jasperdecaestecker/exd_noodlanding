@@ -13,16 +13,22 @@ body
 
 canvas
 {
-	/*background-color: black;*/
-	border: 1px white solid;
+	z-index: 1;
 }
+
+#cnvs
+{
+	width: 50%;
+	margin-right:auto;
+	margin-left: 25%;
+}
+
 
 #startScherm, #ruisScherm
 {
 	position: absolute;
 	top:0;
-	left: 300px;
-	width: 1280px;
+	width: 100% !important;
 }
 
 #eindScherm
@@ -55,6 +61,19 @@ canvas
   	background-color: black;
 	z-index: 0;
 }
+
+#startScherm, #ruisScherm, video
+{
+	z-index: 1;
+}
+
+#startScherm, #ruisScherm
+{
+	position: absolute;
+	top:0;
+	left:0;
+}
+
 
 #eigenWebcamBeeld, #eigenEffect
 {
