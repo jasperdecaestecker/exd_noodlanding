@@ -17,6 +17,7 @@ var selfid,
     landingZone,
     delayPilkes,
     currentAnimationPilke,
+    currentAnimationRadar,
     delayRuis,
     toggleRuis,
     endTicker,
@@ -87,10 +88,11 @@ function startSpel()
     setTimeout(function() 
     {
         console.log("crashScreen");
-
+        easyRTC.sendDataWS(otherid, {msgType:"crash"});
 
         document.getElementById('alarm').play();
        document.getElementById('alarm').volume=.1;
+
 
         canControl = false;
             keys[37] = keys[38] = keys[39] = keys[40] = false;
@@ -161,6 +163,10 @@ function listenToDataFromServer(from,data)
   {
     showEndScreen();
   }
+  if(data.msgType == "crash")
+  {
+    showRadar = true;
+  }
 }
 
 function setToestel()
@@ -170,6 +176,8 @@ function setToestel()
   delayPilkes = 25;
   toggleRuis = true;
   currentAnimationPilke = 0;
+  currentAnimationRadar = 0;
+  showRadar = false;
 
   spaceShip = new SpaceShip(50,50,10,10);
   landingZone = new LandingZone(0,this.height-255,944,255);
@@ -321,7 +329,21 @@ function update()
       spaceShip.update();
       stage.update();
 
-      if(ticker.getTicks() % delayPilkes == 0)
+
+      // animatie Radar
+      if((ticker.getTicks() % delayPilkes == 0) && showRadar)
+      {
+        spaceShip.radar.gotoAndStop(currentAnimationRadar);
+        currentAnimationRadar++;
+
+        if(currentAnimationRadar == 4)
+        {
+          currentAnimationRadar = 0;
+        }
+      }
+
+      // animatie landingszone
+       if(ticker.getTicks() % delayPilkes == 0)
       {
         landingZone.pilke.gotoAndStop(currentAnimationPilke);
         currentAnimationPilke++;
@@ -332,6 +354,7 @@ function update()
         }
       }
      
+     // animatie ruis
      if(ticker.getTicks() % delayRuis == 0)
      {
        toggleRuis = !toggleRuis;
@@ -407,11 +430,14 @@ function showEndScreen()
 {
   canControl = false;
   ticker.setPaused(true);
-  $("#cnvs").hide();
+  //$("#cnvs").hide();
 
   $("#startScherm").empty();
   $("#ruisScherm").empty();
   $('#eindScherm').show();
+  spaceShip.radar.gotoAndStop(0);
+
+  showRadar = false;
 
     document.getElementById('alarm').pause();
     document.getElementById('alarm').currentTime = 0;
@@ -419,6 +445,7 @@ function showEndScreen()
   setTimeout(function() 
   {
     canControl = true;
+
        $("#cnvs").show();
 
       $('#eindScherm').hide();
@@ -455,9 +482,6 @@ function init()
     console.log("height:" + height);
 
     $('#eindScherm').hide();
-
-
-    //$('#startScherm').hide();
  }
 
 function clearConnectList() 
@@ -468,7 +492,6 @@ function clearConnectList()
       otherClientDiv.removeChild(otherClientDiv.lastChild);
   }
 }
-
 
 function loggedInListener(data) 
 {

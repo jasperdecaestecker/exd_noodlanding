@@ -1,6 +1,6 @@
 var SpaceShip = (function()
 {
-	var shape, bitmap, animation;
+	var shape, bitmap, animation, radar;
 	function SpaceShip(x, y, width, height)
 	{
 		this.x = x;
@@ -41,8 +41,21 @@ var SpaceShip = (function()
 		this.animation.y = -60;
 		this.animation.gotoAndStop(4);
 
+		var data = {
+		     images: ["css/images/radar.png"],
+		     frames: {width:150, height:150}
+	 		 };
+
+		var spriteSheet = new createjs.SpriteSheet(data);
+		this.radar = new createjs.Sprite(spriteSheet);
+		this.radar.x = -70;
+		this.radar.y = -75;
+		this.radar.gotoAndStop(0);
+
+
 		this.container.addChild(this.shape);
 		this.container.addChild(this.animation);
+			this.container.addChild(this.radar);
 	};
 
 	SpaceShip.prototype.update = function()

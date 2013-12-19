@@ -33,13 +33,19 @@ canvas
 
 #eindScherm
 {
+	font-size: 1.5em;
+	margin-top: 25%;
 	position: absolute;
-	left: 35%;
-
-	top: 50%;
-	font-size: 2em;
-
+    top: 0px;
+    z-index: 1;
+    width:600px;
+    margin-left:-300px;
+    left:50%;
+    background: #0f1014;
+    text-align: center;
+    padding: 10px;
 }
+
 
 #eigenEffect, #andereEffect
 {
@@ -62,7 +68,7 @@ canvas
 	z-index: 0;
 }
 
-#startScherm, #ruisScherm, video
+#startScherm, #ruisScherm, video, #eindScherm
 {
 	z-index: 1;
 }
