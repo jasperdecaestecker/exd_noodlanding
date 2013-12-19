@@ -70,19 +70,18 @@ var SpaceShip = (function()
 		{
 			this.x = 100;
 		}
-		if(this.y < 0 || this.y > 1000)
+		if(this.y < 0 || this.y > 1100)
 		{
 			this.y = 100;
 		}
 
 		this.container.x = this.x;
 		this.container.y = this.y;
-		// comment frictie voor bizare beweging. maakt het iets cooler.
 		this.velX *= this.friction;
 		this.velY *= this.friction;
 
-		// uncomment voor gravity
-		//this.velY += this.gravity;
+		// gravity is niet goed
+		//this.velY +=0.1;
 	}
 
 	return SpaceShip;

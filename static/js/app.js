@@ -88,10 +88,11 @@ function startSpel()
     setTimeout(function() 
     {
         console.log("crashScreen");
+
         easyRTC.sendDataWS(otherid, {msgType:"crash"});
 
         document.getElementById('alarm').play();
-       document.getElementById('alarm').volume=.1;
+       document.getElementById('alarm').volume=.2;
 
 
         canControl = false;
@@ -166,6 +167,7 @@ function listenToDataFromServer(from,data)
   if(data.msgType == "crash")
   {
     showRadar = true;
+    $('#hulpScherm').show();
   }
 }
 
@@ -333,6 +335,7 @@ function update()
       // animatie Radar
       if((ticker.getTicks() % delayPilkes == 0) && showRadar)
       {
+
         spaceShip.radar.gotoAndStop(currentAnimationRadar);
         currentAnimationRadar++;
 
@@ -360,12 +363,12 @@ function update()
        toggleRuis = !toggleRuis;
         if(toggleRuis)
         {
-          delayRuis = 200;
+           delayRuis = Math.floor(Math.random() * 220) + 180;
           $("#ruisVideo").show();
         }
         else
         {
-          delayRuis = 10;
+          delayRuis = Math.floor(Math.random() * 25) + 5;
           $("#ruisVideo").hide();
         }
      }
@@ -435,6 +438,7 @@ function showEndScreen()
   $("#startScherm").empty();
   $("#ruisScherm").empty();
   $('#eindScherm').show();
+  $('#hulpScherm').hide();
   spaceShip.radar.gotoAndStop(0);
 
   showRadar = false;
@@ -445,6 +449,7 @@ function showEndScreen()
   setTimeout(function() 
   {
     canControl = true;
+
 
        $("#cnvs").show();
 
@@ -482,6 +487,7 @@ function init()
     console.log("height:" + height);
 
     $('#eindScherm').hide();
+    $('#hulpScherm').hide();
  }
 
 function clearConnectList() 

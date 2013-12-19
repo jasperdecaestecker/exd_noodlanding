@@ -31,6 +31,18 @@ canvas
 	width: 100% !important;
 }
 
+#hulpScherm
+{
+	position: absolute;
+	left: 10px;
+	top: 410px;
+	border: 2px solid #cc3b24;
+	padding: 10px;
+	text-align: left;
+	font-size: 0.8em;
+	width: 260px;
+}
+
 #eindScherm
 {
 	font-size: 1.5em;
